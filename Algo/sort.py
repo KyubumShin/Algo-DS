@@ -49,9 +49,29 @@ def quick_sort(arr):
     return quick_sort(left) + [pivot] + quick_sort(right)
 
 
-def i_quick_sort_(arr):
+def i_quick_sort(arr):
     n = len(arr)
-    pass
+    low = 0
+    high = n-1
+    stack = [(low, high)]
+    while stack:
+        low, high = stack.pop()
+        low_temp = low
+        high_temp = high
+        direct = 0
+        while low < high:
+            if arr[low] >= arr[high]:
+                arr[low], arr[high] = arr[high], arr[low]
+                direct = direct ^ 1
+            if direct == 0:
+                low += 1
+            else:
+                high -= 1
+        if low - low_temp > 1:
+            stack.append((low_temp, low-1))
+        if high_temp - high > 1:
+            stack.append((high+1, high_temp))
+    return arr
 
 
 def merge_sort(arr):
@@ -153,7 +173,7 @@ def main():
         "reverse": [i for i in range(1000, 0, -1)],
     }
     # arr_dict = {
-    #     "random": [random.randint(0, 20) for _ in range(20)],
+    #     "random": [random.randint(0, 30) for _ in range(20)],
     #     "sorted": [i for i in range(1, 11)],
     #     "reverse": [i for i in range(10, 0, -1)],
     # }
@@ -167,6 +187,7 @@ def main():
         'selection_sort': selection_sort,
         'insertion_sort': insertion_sort,
         'quick_sort': quick_sort,
+        'quick_sort_iterative': i_quick_sort,
         'merge_sort': merge_sort,
         'merge_sort_iterative' : i_merge_sort,
         'heap_sort': heap_sort,
@@ -176,6 +197,7 @@ def main():
         'selection_sort',
         'insertion_sort',
         # 'quick_sort',
+        'quick_sort_iterative',
         'merge_sort',
         'merge_sort_iterative',
         'heap_sort',
